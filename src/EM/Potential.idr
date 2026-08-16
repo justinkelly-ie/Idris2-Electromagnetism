@@ -1,6 +1,6 @@
 module EM.Potential
 
-import Substrate.Core
+import public Substrate.Core
 import Substrate.Difference
 
 %default total
