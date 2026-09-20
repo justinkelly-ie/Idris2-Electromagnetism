@@ -1,6 +1,7 @@
 module Electromagnetism
 
 import public EM.Calculus
+import public EM.EMScaleTransforms
 import public EM.FieldStream
 import public EM.Flux
 import public EM.Gauge

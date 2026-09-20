@@ -8,6 +8,7 @@ sourcedir = "src"
 
 modules = Electromagnetism,
           EM.Calculus,
+          EM.EMScaleTransforms,
           EM.FieldStream,
           EM.Flux,
           EM.Gauge,
