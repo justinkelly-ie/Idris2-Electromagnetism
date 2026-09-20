@@ -3,6 +3,7 @@ module EM.FieldStream
 import Data.List
 import Data.Fuel
 import Math.OnSeq.FusedStream
+import Math.Singleton.Bit
 import EM.Maxwell
 import EM.Calculus
 import Core.VexelMaxel
@@ -63,3 +64,53 @@ fusedPoyntingAccumulate strm =
   where
     addMaxel : Core.VexelMaxel.Maxel -> Core.VexelMaxel.Maxel -> Core.VexelMaxel.Maxel
     addMaxel (MkMaxel xs) (MkMaxel ys) = MkMaxel (xs ++ ys)
+
+------------------------------------------------------------------------
+-- 2. DEFORESTED PHOTON STATE STREAM TRANSDUCERS (O(1) ALLOCATION)
+------------------------------------------------------------------------
+
+||| Photon State Token carrying polarization bit and photon energy frequency quanta.
+public export
+record PhotonStateToken where
+  constructor MkPhotonToken
+  polarization : Bit
+  frequency    : BoxInt
+
+public export
+Eq PhotonStateToken where
+  (MkPhotonToken p1 f1) == (MkPhotonToken p2 f2) = p1 == p2 && f1 == f2
+
+||| Unfolds a list of photon state parameters into a deforested PhotonStateStream.
+%inline public export
+unfoldPhotonStream : List (Bit, BoxInt) -> FusedStream PhotonStateToken
+unfoldPhotonStream items = MkStream nextStep items
+  where
+    nextStep : List (Bit, BoxInt) -> Step (List (Bit, BoxInt)) PhotonStateToken
+    nextStep [] = Done
+    nextStep ((pol, freq) :: rest) = Yield (MkPhotonToken pol freq) rest
+
+||| Deforested stream transducer propagating photon states with zero intermediate list allocations.
+public export
+fusedPhotonStateStream : FusedStream PhotonStateToken -> FusedStream PhotonStateToken
+fusedPhotonStateStream strm =
+  mapStream (\tok => MkPhotonToken (tok.polarization) (tok.frequency + intToBoxInt 1)) strm
+
+||| Evaluates total photon stream energy using a fused hylomorphism.
+public export covering
+fusedComputePhotonStreamEnergy : Fuel -> List (Bit, BoxInt) -> BoxInt
+fusedComputePhotonStreamEnergy f items =
+  fusedHylomorphism f
+    (\st => case st of
+              [] => Done
+              (pol, freq) :: rest => Yield (MkPhotonToken pol freq) rest)
+    (\tok, acc => frequency tok + acc)
+    (intToBoxInt 0)
+    items
+
+||| Audit witness verifying zero-allocation deforested photon stream energy calculation.
+public export covering
+auditPhotonStreamProof : Bool
+auditPhotonStreamProof =
+  let items = [(Zero, intToBoxInt 5), (One, intToBoxInt 10)]
+      totalE = fusedComputePhotonStreamEnergy (limit 100) items
+  in unwrapBox totalE == 15

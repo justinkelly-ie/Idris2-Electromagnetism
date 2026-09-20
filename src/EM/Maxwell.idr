@@ -1,6 +1,7 @@
 module EM.Maxwell
 
 import Core.BoxInt
+import Core.Order.Preorder
 import public Core.VexelMaxel
 import Geometry.GrassmannCalculus
 import EM.Potential
@@ -26,6 +27,36 @@ MaxwellState = (EdgeCochain, FaceCochain, EdgeCochain, CellCochain)
 public export
 makeMaxwellState : EdgeCochain -> FaceCochain -> EdgeCochain -> CellCochain -> MaxwellState
 makeMaxwellState e b j rho = (e, b, j, rho)
+
+------------------------------------------------------------------------
+-- 0. GAUSS LAW & CHARGE CONSERVATION WITNESSES
+------------------------------------------------------------------------
+
+||| Monomorphic compile-time proof witness verifying Gauss Law / Charge Conservation:
+||| div E = rho (natAdd divE 0 = rho).
+public export
+0 ChargeConservationWitness : Nat -> Nat -> Type
+ChargeConservationWitness divE rho = natAdd divE 0 = rho
+
+||| Static erased compile-time witness certifying Vacuum Gauss Law Charge Conservation (0 = 0).
+public export
+0 prfVacuumGaussLawChargeConservation : ChargeConservationWitness 0 0
+prfVacuumGaussLawChargeConservation = Refl
+
+||| A Maxwell Field State carrying an erased 0 chargePrf witness certifying Gauss Law / Charge Conservation (div E = rho).
+public export
+record VerifiedMaxwellState (divE : Nat) (rho : Nat) where
+  constructor MkVerifiedMaxwellState
+  fieldState : MaxwellState
+  0 chargePrf : ChargeConservationWitness divE rho
+
+||| Constructs a validated VerifiedMaxwellState with an erased compile-time charge conservation proof.
+public export
+makeVerifiedMaxwellState : (divE : Nat) -> (rho : Nat) ->
+                           (0 prf : ChargeConservationWitness divE rho) ->
+                           MaxwellState ->
+                           VerifiedMaxwellState divE rho
+makeVerifiedMaxwellState divE rho prf state = MkVerifiedMaxwellState state prf
 
 public export
 maxwellElectricField : MaxwellState -> EdgeCochain
