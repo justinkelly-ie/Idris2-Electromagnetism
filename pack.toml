@@ -1,44 +1,60 @@
+[package]
+name = "Idris2-Electromagnetism"
+version = "0.3.0"
+ipkg = "Idris2-Electromagnetism.ipkg"
+
+[custom.all.Idris2-Electromagnetism]
+type = "local"
+path = "."
+ipkg = "Idris2-Electromagnetism.ipkg"
+
 [custom.all.idris2-Electromagnetism]
 type = "local"
 path = "."
-ipkg = "idris2-Electromagnetism.ipkg"
+ipkg = "Idris2-Electromagnetism.ipkg"
 
-[custom.all.idris2-Electromagnetism-test]
+[custom.all.Idris2-Geometry]
 type = "local"
-path = "."
-ipkg = "idris2-Electromagnetism-test.ipkg"
+path = "../Idris2-Geometry"
+ipkg = "Idris2-Geometry.ipkg"
 
-[custom.all.idris2-Substrate]
+[custom.all.Idris2-Multiset-Core]
 type = "local"
-path = "../idris2-Substrate"
-ipkg = "idris2-Substrate.ipkg"
+path = "../Idris2-Multiset-Core"
+ipkg = "Idris2-Multiset-Core.ipkg"
 
-[custom.all.Idris2-GeoLinAlg]
+[custom.all.Idris2-Multiset-Transform]
 type = "local"
-path = "../Idris2-GeoLinAlg"
-ipkg = "Idris2-GeoLinAlg.ipkg"
+path = "../Idris2-Multiset-Transform"
+ipkg = "Idris2-Multiset-Transform.ipkg"
 
 [custom.all.Idris2-Multiset-Binary]
 type = "local"
 path = "../Idris2-Multiset-Binary"
 ipkg = "Idris2-Multiset-Binary.ipkg"
 
+[custom.all.Idris2-Multiset-Ternary]
+type = "local"
+path = "../Idris2-Multiset-Ternary"
+ipkg = "Idris2-Multiset-Ternary.ipkg"
+
+[custom.all.Idris2-GeoLinAlg]
+type = "local"
+path = "../Review/Idris2-GeoLinAlg"
+ipkg = "Idris2-GeoLinAlg.ipkg"
+
+[custom.all.Idris2-Dihedron]
+type = "local"
+path = "../Idris2-Dihedron"
+ipkg = "Idris2-Dihedron.ipkg"
+
 [custom.all.idris2-Dihedron]
 type = "local"
-path = "../idris2-Dihedron"
+path = "../Idris2-Dihedron"
 ipkg = "idris2-Dihedron.ipkg"
-
-[custom.all.idris2-Multiset]
-type = "local"
-path = "../idris2-Multiset"
-ipkg = "idris2-Multiset.ipkg"
-
-[custom.all.idris2-chromogeometry]
-type = "local"
-path = "../idris2-Chromogeometry"
-ipkg = "idris2-chromogeometry.ipkg"
 
 [custom.all.idris2-QuickCheck]
 type = "local"
 path = "../idris2-QuickCheck"
 ipkg = "idris2-QuickCheck.ipkg"
+

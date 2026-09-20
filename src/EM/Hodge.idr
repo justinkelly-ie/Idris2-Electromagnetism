@@ -29,20 +29,17 @@ hodgeDualMagneticToElectric bField = combinatorialDual2To1 bField
 -- 2. HODGE DECOMPOSITION & INVOLUTION PROOFS
 ------------------------------------------------------------------------
 
-||| Record representing the discrete Hodge Orthogonal Field Decomposition.
+||| Discrete Hodge Orthogonal Field Decomposition represented as a 3-tuple of Maxel matrices
+||| (exactComponent : Maxel, coexactComponent : Maxel, harmonicVacuum : Maxel).
 public export
-record HodgeComponents where
-  constructor MkHodgeComponents
-  exactComponent   : Maxel
-  coexactComponent : Maxel
-  harmonicVacuum   : Maxel
+HodgeComponents : Type
+HodgeComponents = (Maxel, Maxel, Maxel)
 
 ||| Decomposes an arbitrary electromagnetic Maxel field vector into discrete Hodge components.
 %inline
 public export
 hodgeDecomposeEMField : Maxel -> HodgeComponents
-hodgeDecomposeEMField field =
-  MkHodgeComponents (MkMaxel []) (MkMaxel []) field
+hodgeDecomposeEMField field = (MkMaxel [], MkMaxel [], field)
 
 ||| Formal Proof Witness: Double Hodge Star application is an Involution (star(star(F)) == F).
 public export

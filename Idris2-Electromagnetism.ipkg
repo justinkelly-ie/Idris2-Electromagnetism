@@ -3,15 +3,15 @@ version = 0.3.0
 authors = "Justin Kelly"
 brief   = "Layer 3c Constructive Discrete Electromagnetism & Gauge Field Engine."
 
-depends = base
-        , Idris2-Geometry
-
+depends = Idris2-Geometry, Idris2-Multiset-Core, Idris2-Multiset-Transform, base, linear
 sourcedir = "src"
 
-modules = EM.Potential
-        , EM.Calculus
-        , EM.Gauge
-        , EM.Flux
-        , EM.Hodge
-        , EM.Maxwell
-        , Reflect.Auditor.EM
+modules = EM.Calculus,
+          EM.FieldStream,
+          EM.Flux,
+          EM.Gauge,
+          EM.Hodge,
+          EM.Maxwell,
+          EM.Potential,
+          Reflect.Auditor.EM
+

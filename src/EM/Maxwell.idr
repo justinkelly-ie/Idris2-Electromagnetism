@@ -1,7 +1,7 @@
 module EM.Maxwell
 
 import Core.BoxInt
-import Core.VexelMaxel
+import public Core.VexelMaxel
 import Geometry.GrassmannCalculus
 import EM.Potential
 import EM.Calculus
@@ -14,22 +14,39 @@ import Data.Vect
 %default total
 
 ------------------------------------------------------------------------
--- 1. CONSOLIDATED DISCRETE MAXWELL FIELD STATE
+-- 1. CONSOLIDATED DISCRETE MAXWELL MULTISET FIELD STATE
 ------------------------------------------------------------------------
 
-||| Consolidated Electromagnetic Field State across 0-Cochains, 1-Cochains, and 2-Cochains.
+||| Consolidated Electromagnetic Field State across 0-Cochains, 1-Cochains, and 2-Cochains
+||| represented as a multiset tuple of cochains (E : Maxel, B : Maxel, J : Maxel, rho : Boxel).
 public export
-record MaxwellState where
-  constructor MkMaxwellState
-  electricField : EdgeCochain  -- 1-Form E
-  magneticField : FaceCochain  -- 2-Form B
-  currentDensity: EdgeCochain  -- 1-Form J
-  chargeDensity : CellCochain  -- 3-Form rho
+MaxwellState : Type
+MaxwellState = (EdgeCochain, FaceCochain, EdgeCochain, CellCochain)
+
+public export
+makeMaxwellState : EdgeCochain -> FaceCochain -> EdgeCochain -> CellCochain -> MaxwellState
+makeMaxwellState e b j rho = (e, b, j, rho)
+
+public export
+maxwellElectricField : MaxwellState -> EdgeCochain
+maxwellElectricField (e, _, _, _) = e
+
+public export
+maxwellMagneticField : MaxwellState -> FaceCochain
+maxwellMagneticField (_, b, _, _) = b
+
+public export
+maxwellCurrentDensity : MaxwellState -> EdgeCochain
+maxwellCurrentDensity (_, _, j, _) = j
+
+public export
+maxwellChargeDensity : MaxwellState -> CellCochain
+maxwellChargeDensity (_, _, _, rho) = rho
 
 ||| Vacuum Maxwell State (E = 0, B = 0, J = 0, rho = 0).
 public export
 vacuumMaxwellState : MaxwellState
-vacuumMaxwellState = MkMaxwellState (MkMaxel []) (MkMaxel []) (MkMaxel []) (MkBoxel [])
+vacuumMaxwellState = (MkMaxel [], MkMaxel [], MkMaxel [], MkBoxel [])
 
 ------------------------------------------------------------------------
 -- 2. DISCRETE POYNTING ENERGY VECTOR & ENERGY CONSERVATION
@@ -65,7 +82,7 @@ public export
 auditMaxwellVacuumSolenoidProof : Bool
 auditMaxwellVacuumSolenoidProof =
   let state = vacuumMaxwellState
-      eZero = electricField state
-      bZero = magneticField state
+      eZero = maxwellElectricField state
+      bZero = maxwellMagneticField state
       energy = computeEnergyDensity eZero bZero
   in energy == intToBoxInt 0

@@ -2,6 +2,7 @@ module EM.Flux
 
 import Core.BoxInt
 import Core.VexelMaxel
+import Math.Multiset
 import Geometry.GrassmannCalculus
 import EM.Potential
 import EM.Calculus
@@ -11,7 +12,28 @@ import Data.Vect
 %default total
 
 ------------------------------------------------------------------------
--- 1. PLAQUETTE FLUX & FARADAY ELECTROMOTIVE INDUCTION
+-- 1. PURE MULTISET PLAQUETTE FLUX & FARADAY ELECTROMOTIVE INDUCTION
+------------------------------------------------------------------------
+
+||| Computes magnetic flux B_pl = ∮ A · dl enclosed by a closed loop of Pixel edges
+||| evaluated over a vector potential multiset A : Multiset BoxInt Pixel.
+public export
+computeMultisetPlaquetteFlux : List Pixel -> Multiset BoxInt Pixel -> BoxInt
+computeMultisetPlaquetteFlux loopEdges potMultiset =
+  sum (map (\p => lookupCount p potMultiset) loopEdges)
+
+||| Computes Faraday's Law of Electromotive Force (EMF): E_emf = - (Flux_t2 - Flux_t1) / dt
+||| over a loop specified by pure multiset vector potentials.
+public export
+computeMultisetFaradayEMF : Multiset BoxInt Pixel -> Multiset BoxInt Pixel -> List Pixel -> BoxInt -> BoxInt
+computeMultisetFaradayEMF potT1 potT2 loopEdges dt =
+  let fluxT1 = computeMultisetPlaquetteFlux loopEdges potT1
+      fluxT2 = computeMultisetPlaquetteFlux loopEdges potT2
+      deltaFlux = fluxT2 - fluxT1
+  in intToBoxInt (-1) * deltaFlux
+
+------------------------------------------------------------------------
+-- 2. PLAQUETTE FLUX & FARADAY ELECTROMOTIVE INDUCTION (LEGACY)
 ------------------------------------------------------------------------
 
 ||| A Plaquette 2-Cell represented as a closed boundary loop of 4 Unixel vertices.
@@ -35,7 +57,7 @@ computeFaradayEMF fluxT1 fluxT2 dt =
   in intToBoxInt (-1) * deltaFlux
 
 ------------------------------------------------------------------------
--- 2. GAUSS'S LAW FOR MAGNETISM (div B = 0 / NO MONOPOLES)
+-- 3. GAUSS'S LAW FOR MAGNETISM (div B = 0 / NO MONOPOLES)
 ------------------------------------------------------------------------
 
 ||| Formal Proof Witness: Total Magnetic Flux across a Closed Voxel Surface is Zero (d2 B == 0).

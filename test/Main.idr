@@ -5,7 +5,6 @@ import Data.List
 import Math.Multiset
 import Math.BoxInt
 import Math.Pixel
-import Math.Chromogeometry
 import Math.Interfaces
 import Substrate.Core
 import Substrate.Difference
