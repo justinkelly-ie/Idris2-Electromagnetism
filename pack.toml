@@ -1,56 +1,56 @@
 [package]
-name = "Idris2-Electromagnetism"
+name = "FinSc-Electromagnetism"
 version = "0.3.0"
-ipkg = "Idris2-Electromagnetism.ipkg"
+ipkg = "FinSc-Electromagnetism.ipkg"
 
-[custom.all.Idris2-Electromagnetism]
+[custom.all.FinSc-Electromagnetism]
 type = "local"
 path = "."
-ipkg = "Idris2-Electromagnetism.ipkg"
+ipkg = "FinSc-Electromagnetism.ipkg"
 
 [custom.all.idris2-Electromagnetism]
 type = "local"
 path = "."
-ipkg = "Idris2-Electromagnetism.ipkg"
+ipkg = "FinSc-Electromagnetism.ipkg"
 
-[custom.all.Idris2-Geometry]
+[custom.all.FinSc-Geometry]
 type = "local"
-path = "../Idris2-Geometry"
-ipkg = "Idris2-Geometry.ipkg"
+path = "../FinSc-Geometry"
+ipkg = "FinSc-Geometry.ipkg"
 
-[custom.all.Idris2-Multiset-Core]
+[custom.all.FinSc-Multiset-Core]
 type = "local"
-path = "../Idris2-Multiset-Core"
-ipkg = "Idris2-Multiset-Core.ipkg"
+path = "../FinSc-Multiset-Core"
+ipkg = "FinSc-Multiset-Core.ipkg"
 
-[custom.all.Idris2-Multiset-Transform]
+[custom.all.FinSc-Multiset-Transform]
 type = "local"
-path = "../Idris2-Multiset-Transform"
-ipkg = "Idris2-Multiset-Transform.ipkg"
+path = "../FinSc-Multiset-Transform"
+ipkg = "FinSc-Multiset-Transform.ipkg"
 
-[custom.all.Idris2-Multiset-Binary]
+[custom.all.FinSc-Multiset-Binary]
 type = "local"
-path = "../Idris2-Multiset-Binary"
-ipkg = "Idris2-Multiset-Binary.ipkg"
+path = "../FinSc-Multiset-Binary"
+ipkg = "FinSc-Multiset-Binary.ipkg"
 
-[custom.all.Idris2-Multiset-Ternary]
+[custom.all.FinSc-Multiset-Ternary]
 type = "local"
-path = "../Idris2-Multiset-Ternary"
-ipkg = "Idris2-Multiset-Ternary.ipkg"
+path = "../FinSc-Multiset-Ternary"
+ipkg = "FinSc-Multiset-Ternary.ipkg"
 
-[custom.all.Idris2-GeoLinAlg]
+[custom.all.FinSc-GeoLinAlg]
 type = "local"
-path = "../Review/Idris2-GeoLinAlg"
-ipkg = "Idris2-GeoLinAlg.ipkg"
+path = "../Review/FinSc-GeoLinAlg"
+ipkg = "FinSc-GeoLinAlg.ipkg"
 
-[custom.all.Idris2-Dihedron]
+[custom.all.FinSc-Dihedron]
 type = "local"
-path = "../Idris2-Dihedron"
-ipkg = "Idris2-Dihedron.ipkg"
+path = "../FinSc-Dihedron"
+ipkg = "FinSc-Dihedron.ipkg"
 
 [custom.all.idris2-Dihedron]
 type = "local"
-path = "../Idris2-Dihedron"
+path = "../FinSc-Dihedron"
 ipkg = "idris2-Dihedron.ipkg"
 
 [custom.all.idris2-QuickCheck]
